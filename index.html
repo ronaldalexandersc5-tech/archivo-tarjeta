@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de Trabajadores para Trabajos de Alto Riesgo</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .contenedor {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      color: #004085;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #resultado {
+      margin-top: 25px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #dee2e6;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .ok {
+      color: green;
+      font-weight: bold;
+    }
+
+    .no {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contenedor">
+    <!-- 🏢 Logo de la empresa -->
+    <img src="Logo-CMLD.png" alt="Logo de la Empresa" class="logo">
+
+    <h1>CONSULTA DE TRABAJADORES PARA TRABAJOS DE ALTO RIESGO</h1>
+
+    <form id="form-consulta">
+      <label for="dni">Ingrese DNI:</label>
+      <input type="text" id="dni" placeholder="Ejemplo: 78945612" required>
+      <button type="submit">Consultar</button>
+    </form>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    // 🧾 Base de datos simulada de trabajadores
+    const trabajadores = [
+      {
+        dni: "78945612",
+        nombre: "Juan José Morales Castro",
+        area: "Seguridad y Salud Ocupacional",
+        cargo: "Supervisor de Seguridad",
+        aptoAltura: true
+      },
+      {
+        dni: "74529590",
+        nombre: "Claudio Jocópe Morales",
+        area: "Operaciones",
+        cargo: "Técnico de Mantenimiento",
+        aptoAltura: true
+      },
+      {
+        dni: "72238737",
+        nombre: "Sergio Sernaque Jiménez",
+        area: "Producción",
+        cargo: "Operario de Planta",
+        aptoAltura: true
+      }
+    ];
+
+    // 🎯 Evento al enviar el formulario
+    document.getElementById("form-consulta").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const dniIngresado = document.getElementById("dni").value.trim();
+      const resultado = document.getElementById("resultado");
+
+      const trabajador = trabajadores.find(t => t.dni === dniIngresado);
+
+      if (trabajador) {
+        resultado.innerHTML = `
+          <p><strong>DNI:</strong> ${trabajador.dni}</p>
+          <p><strong>Nombre y Apellidos:</strong> ${trabajador.nombre}</p>
+          <p><strong>Área:</strong> ${trabajador.area}</p>
+          <p><strong>Cargo:</strong> ${trabajador.cargo}</p>
+          <p><strong>Apto para trabajos en altura:</strong> 
+             ${trabajador.aptoAltura ? '<span class="ok">SÍ</span>' : '<span class="no">NO</span>'}
+          </p>
+        `;
+      } else {
+        resultado.innerHTML = `<p style="color:red;">❌ No se encontró ningún trabajador con ese DNI.</p>`;
+      }
+    });
+  </script>
+
+</body>
+</html>
